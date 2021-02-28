@@ -1,11 +1,10 @@
 package com.machinedoll.play.structuredstateful
 
-import com.github.yuvalitzchakov.user.UserSession
-import org.apache.spark.sql._
-import scalaz.{-\/, \/-}
 import argonaut.Argonaut._
 import com.machinedoll.play.user.{UserEvent, UserSession}
+import org.apache.spark.sql._
 import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, OutputMode}
+import scalaz.{-\/, \/-}
 
 /**
   * Created by Yuval.Itzchakov on 29/07/2017.
@@ -57,9 +56,9 @@ object StatefulStructuredSessionization {
   }
 
   def updateSessionEvents(
-      id: Int,
-      userEvents: Iterator[UserEvent],
-      state: GroupState[UserSession]): Option[UserSession] = {
+                           id: Int,
+                           userEvents: Iterator[UserEvent],
+                           state: GroupState[UserSession]): Option[UserSession] = {
     if (state.hasTimedOut) {
       // We've timed out, lets extract the state and send it down the stream
       state.remove()
