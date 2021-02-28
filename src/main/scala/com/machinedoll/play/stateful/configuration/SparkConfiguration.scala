@@ -1,4 +1,4 @@
-package com.github.yuvalitzchakov.stateful.configuration
+package com.machinedoll.play.stateful.configuration
 
 /**
   * Created by Yuval.Itzchakov on 3/12/2017.

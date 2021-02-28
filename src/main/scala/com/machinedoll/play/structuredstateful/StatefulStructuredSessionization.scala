@@ -1,15 +1,11 @@
-package com.github.yuvalitzchakov.structuredstateful
+package com.machinedoll.play.structuredstateful
 
-import com.github.yuvalitzchakov.user.{UserEvent, UserSession}
+import com.github.yuvalitzchakov.user.UserSession
 import org.apache.spark.sql._
-
 import scalaz.{-\/, \/-}
 import argonaut.Argonaut._
-import org.apache.spark.sql.streaming.{
-  GroupState,
-  GroupStateTimeout,
-  OutputMode
-}
+import com.machinedoll.play.user.{UserEvent, UserSession}
+import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, OutputMode}
 
 /**
   * Created by Yuval.Itzchakov on 29/07/2017.

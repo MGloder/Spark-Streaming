@@ -1,4 +1,4 @@
-package com.github.yuvalitzchakov.streamingjoin
+package com.machinedoll.play.streamingjoin
 
 import java.sql.Timestamp
 

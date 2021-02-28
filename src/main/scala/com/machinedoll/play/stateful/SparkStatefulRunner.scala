@@ -1,12 +1,12 @@
-package com.github.yuvalitzchakov.stateful
+package com.machinedoll.play.stateful
 
-import com.github.yuvalitzchakov.stateful.configuration.SparkConfiguration
 import org.apache.spark.SparkContext
 import org.apache.spark.streaming._
 import pureconfig._
 import argonaut.Argonaut._
-import com.github.yuvalitzchakov.user.{UserEvent, UserSession}
-
+import com.github.yuvalitzchakov.user.UserSession
+import com.machinedoll.play.stateful.configuration.SparkConfiguration
+import com.machinedoll.play.user.{UserEvent, UserSession}
 import scalaz.{-\/, \/-}
 
 /**
