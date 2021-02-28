@@ -2,7 +2,7 @@ package com.github.yuvalitzchakov.streamingjoin
 
 import java.sql.Timestamp
 
-import org.apache.spark.sql.functions.expr
+import org.apache.spark.sql.functions.{expr, struct, to_json}
 import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 
 object StreamStream {
@@ -15,7 +15,7 @@ object StreamStream {
 
     import spark.implicits._
 
-    spark.sparkContext.setLogLevel("ERROR")
+    spark.conf.set("spark.sql.streaming.checkpointLocation", "file:///tmp/example")
 
     val s9999: DataFrame = spark
       .readStream
@@ -52,14 +52,19 @@ object StreamStream {
           """
                 id99 = id98 AND
                 timestamp98 >= timestamp99 AND
-                timestamp98 <= timestamp99 + interval 10 seconds
+                timestamp98 <= timestamp99 + interval 6 seconds
         """),
-        joinType = "leftOuter")
+        joinType = "leftouter")
 
     val streamingQuery = resultDataset
+      .select(
+        to_json(
+          struct($"id98", $"timestamp98"))
+          .alias("value"))
       .writeStream
-      .outputMode("append")
-      .format("console")
+      .format("kafka")
+      .option("kafka.bootstrap.servers", "chatbot001s-mbp:9092")
+      .option("topic", "topic1")
       .start()
 
     streamingQuery.awaitTermination()
