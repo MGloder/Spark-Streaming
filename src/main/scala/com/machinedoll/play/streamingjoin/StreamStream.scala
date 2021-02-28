@@ -45,6 +45,8 @@ object StreamStream {
         val time = Timestamp.valueOf(strings(1))
         S9998(id, time)
       })
+      .withWatermark("timestamp98", "10 seconds")
+
 
     val resultDataset = s9998Dataset
       .join(s9999Dataset,
@@ -54,12 +56,12 @@ object StreamStream {
                 timestamp98 >= timestamp99 AND
                 timestamp98 <= timestamp99 + interval 6 seconds
         """),
-        joinType = "leftouter")
+        joinType = "left")
 
     val streamingQuery = resultDataset
       .select(
         to_json(
-          struct($"id98", $"timestamp98"))
+          struct($"id98", $"timestamp98", $"id99"))
           .alias("value"))
       .writeStream
       .format("kafka")
